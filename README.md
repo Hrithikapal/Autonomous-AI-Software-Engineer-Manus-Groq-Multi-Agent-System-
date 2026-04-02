@@ -1,23 +1,32 @@
 # Manus — Autonomous AI Software Engineer
 
-An autonomous multi-agent AI system that plans, generates, tests, and self-debugs software projects — fully end-to-end, without human intervention.
-
-Built as a portfolio project targeting FAANG/Nvidia-level engineering roles.
+> Give it a task in plain English.
+> It plans, researches, writes production code, catches its own bugs, fixes them, runs tests, scores the output, and improves itself — **without you touching anything.**
 
 ---
 
-## Demo
+## What it actually does
 
-> **Input:** `"Build a URL shortener with analytics"`
+```
+You:    "Build a URL shortener with analytics"
 
-**What happens:**
-1. **Manus** (orchestrator) breaks the task into steps using LLM reasoning
-2. **ResearchAgent** searches the web for relevant libraries and patterns
-3. **CodingAgent** generates production-quality code across multiple files
-4. **DebugAgent** catches errors and self-heals — up to 3 automatic retries
-5. **TestAgent** generates and runs pytest test cases
-6. **Evaluator** scores the output 0–10 on correctness, quality, and completeness
-7. If score < 6, Manus triggers an improvement loop automatically
+[Manus]      Analysing task → creating execution plan (ReAct reasoning)
+[Research]   Searching docs, libraries, best practices...
+[Research]   ⚡ Running in parallel with above...
+[Coder]      Writing FastAPI backend, DB schema, analytics endpoints...
+[Executor]   Running code in Docker sandbox...
+[Error]      AttributeError: 'NoneType' has no attribute 'short_code'
+[Debugger]   Identifying root cause → fixing null check... (attempt 1/3)
+[Executor]   Running fixed code... ✅ Exit code 0
+[Tests]      Generating pytest suite → running 12 tests...
+[Tests]      9/12 passed (75% pass rate)
+[Evaluator]  Score: 8.0/10 — Correctness 8.5 · Quality 7.5 · Complete 8.0
+[Memory]     Solution saved to ChromaDB for future recall
+
+Output:  app.py  models.py  analytics.py  test_solution.py  requirements.txt
+```
+
+**Total time: ~4 minutes. Zero human intervention.**
 
 **Output:** Working FastAPI app with database schema, API endpoints, test suite, and evaluation score — all generated autonomously.
 

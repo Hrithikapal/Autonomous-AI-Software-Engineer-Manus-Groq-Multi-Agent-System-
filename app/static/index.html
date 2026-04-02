@@ -572,7 +572,7 @@ async function runTask(){
   document.getElementById('status-badge').innerHTML='<div class="pulse-dot" style="background:#6366f1"></div><span style="color:#a5b4fc">Running</span>';
 
   setPipelineState('manus','active');
-  addLog('Manus initialised — sending task to Groq','agent');
+  addLog(`[Manus]     Task received → starting autonomous pipeline`,'agent');
 
   try {
     const resp = await fetch('/api/v1/agent/run',{
@@ -610,22 +610,28 @@ async function runTask(){
 
 // ─── Event router ────────────────────────────────────────
 function handleEvent(event, data){
+  const AGENT_LABEL = {manus:'Manus',research:'Research',coding:'Coder',debug:'Debugger',test:'Tests',evaluation:'Evaluator'};
+
   if(event==='rag_context_loaded'){
     const srcs = (data.data?.sources||[]).map(s=>s.name).join(', ');
-    addLog(`📎 RAG context loaded — ${data.data?.chars||0} chars from: ${srcs}`,'agent');
+    addLog(`[Context]   📎 RAG loaded — ${data.data?.chars||0} chars from: ${srcs}`,'agent');
   }
   else if(event==='plan_ready'){
     setPipelineState('manus','done');
     const steps=data.data?.steps||[];
     renderPlan(steps);
-    // Show parallel badge if multiple research steps
     if(steps.filter(s=>s.agent==='research').length>1)
       document.getElementById('parallel-badge').style.display='block';
-    addLog(`Manus created a ${steps.length}-step plan`,'agent');
+    addLog(`[Manus]     Execution plan ready — ${steps.length} steps`,'agent');
   }
   else if(event==='step_start'){
     const s=data.data?.step;
-    if(s){ updateStep(s.id,'in_progress'); setPipelineState(s.agent,'active'); addLog(`Starting: ${s.agent} — ${s.description.slice(0,60)}...`,'info'); }
+    if(s){
+      updateStep(s.id,'in_progress');
+      setPipelineState(s.agent,'active');
+      const lbl = AGENT_LABEL[s.agent]||s.agent;
+      addLog(`[${lbl.padEnd(10)}] ${s.description.slice(0,65)}...`,'info');
+    }
   }
   else if(event==='step_done'){
     const s=data.data?.step;
@@ -633,37 +639,48 @@ function handleEvent(event, data){
       updateStep(s.id,'completed');
       setPipelineState(s.agent,'done');
       const ms=s.execution_time_ms?` (${(s.execution_time_ms/1000).toFixed(1)}s)`:'';
-      addLog(`✓ ${s.agent} completed${ms}`,'success');
+      const lbl = AGENT_LABEL[s.agent]||s.agent;
+      addLog(`[${lbl.padEnd(10)}] ✅ Done${ms}`,'success');
     }
   }
   else if(event==='step_error'){
     const s=data.data?.step;
-    if(s){ updateStep(s.id,'failed'); addLog(`✗ ${s.agent} failed: ${(data.data?.error||'').slice(0,80)}`,'error'); }
+    if(s){
+      updateStep(s.id,'failed');
+      const lbl = AGENT_LABEL[s.agent]||s.agent;
+      addLog(`[${lbl.padEnd(10)}] ✗ ${(data.data?.error||'').slice(0,80)}`,'error');
+    }
   }
   else if(event==='agent_thought'){
     renderReactStep(data.data||{});
   }
   else if(event==='debug_start'){
     setPipelineState('debug','active');
-    addLog('🐛 Debug loop triggered — Groq fixing error...','warning');
+    addLog(`[Error]     ${(data.data?.error||'Error detected').slice(0,80)}`,'error');
+    addLog(`[Debugger]  Identifying root cause → calling Groq to fix...`,'warning');
     metrics.retries++;
     updateMetricsBar();
   }
   else if(event==='code_diff'){
     renderDiff(data.data?.diff||'');
-    addLog(`🔧 Auto-healed in ${data.data?.attempts||1} attempt(s)`,'success');
+    addLog(`[Debugger]  ✅ Fixed in ${data.data?.attempts||1} attempt(s)`,'success');
+    addLog(`[Executor]  Re-running fixed code...`,'info');
   }
   else if(event==='evaluation_done'){
     setPipelineState('eval','done');
     const ev=data.data?.evaluation;
-    if(ev){ renderEvaluation(ev); addLog(`📊 Score: ${ev.score?.toFixed(1)}/10`,ev.score>=7?'success':'warning'); }
+    if(ev){
+      renderEvaluation(ev);
+      addLog(`[Evaluator] Score ${ev.score?.toFixed(1)}/10 — Correctness ${ev.correctness_score?.toFixed(1)} · Quality ${ev.quality_score?.toFixed(1)}`,ev.score>=7?'success':'warning');
+    }
     if(data.data?.tokens_used) document.getElementById('token-display').textContent=`${data.data.tokens_used.toLocaleString()} tokens`;
-    if(data.data?.improved) addLog('✨ Code improved after re-evaluation','success');
+    if(data.data?.improved) addLog('[Evaluator] ✨ Code improved after re-evaluation','success');
     if(ev?.score) metrics.scores.push(ev.score);
     updateMetricsBar();
   }
   else if(event==='improving'){
-    addLog(`🔄 Score ${data.data?.score?.toFixed(1)}/10 — triggering improvement loop`,'warning');
+    addLog(`[Evaluator] Score ${data.data?.score?.toFixed(1)}/10 below threshold — triggering improvement loop`,'warning');
+    addLog(`[Coder]     Regenerating with targeted improvements...`,'info');
   }
   else if(event==='task_done'){
     const task=data.data||{};
@@ -675,7 +692,9 @@ function handleEvent(event, data){
     if(task.result?.files) renderFiles(task.result.files);
     currentTaskId=task.id;
     addToHistory(task);
-    addLog('🎉 Task completed!','success');
+    const fileList = Object.keys(task.result?.files||{}).join('  ');
+    addLog(`[Output]    ${fileList}`,'agent');
+    addLog(`[Manus]     ✅ Task complete — zero human intervention`,'success');
     document.getElementById('status-badge').innerHTML='<div class="pulse-dot" style="background:#34d399"></div><span style="color:#34d399">Complete</span>';
     document.getElementById('chat-unread').style.display='inline';
     document.getElementById('chat-toggle').style.boxShadow='0 4px 20px rgba(16,185,129,.5)';
@@ -688,7 +707,7 @@ function handleEvent(event, data){
   else if(event==='task_failed'){
     metrics.tasks++;
     updateMetricsBar();
-    addLog('💥 Task failed: '+(data.data?.error||'').slice(0,100),'error');
+    addLog(`[Manus]     ✗ Task failed: ${(data.data?.error||'').slice(0,100)}`,'error');
     document.getElementById('status-badge').innerHTML='<div class="pulse-dot" style="background:#f87171"></div><span style="color:#f87171">Failed</span>';
   }
 }
