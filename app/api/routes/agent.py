@@ -34,7 +34,7 @@ async def run_agent_stream(body: TaskCreate):
     Stream task execution as Server-Sent Events.
     Connect with: EventSource('/api/v1/agent/run', {method:'POST', ...})
     """
-    task = Task(description=body.description, context=body.context)
+    task = Task(description=body.description, context=body.context, session_id=body.session_id)
     get_store()[task.id] = task
 
     async def event_stream() -> AsyncIterator[str]:
@@ -82,7 +82,7 @@ async def run_agent_sync(body: TaskCreate):
     Run the full agent pipeline and return when done.
     Suitable for short tasks or automated tests.
     """
-    task = Task(description=body.description, context=body.context)
+    task = Task(description=body.description, context=body.context, session_id=body.session_id)
     get_store()[task.id] = task
     ACTIVE_TASKS.inc()
     start = time.monotonic()

@@ -51,6 +51,7 @@ class PlanStep(BaseModel):
 class TaskCreate(BaseModel):
     description: str = Field(..., min_length=5, max_length=4000)
     context: Optional[str] = None
+    session_id: Optional[str] = None   # used to pull RAG context from uploaded files/URLs
 
 
 class TaskResult(BaseModel):
@@ -65,6 +66,7 @@ class Task(BaseModel):
     id: str = Field(default_factory=lambda: str(uuid.uuid4()))
     description: str
     context: Optional[str] = None
+    session_id: Optional[str] = None
     status: TaskStatus = TaskStatus.PENDING
     plan: list[PlanStep] = []
     result: Optional[TaskResult] = None
@@ -81,8 +83,19 @@ class Task(BaseModel):
         self.updated_at = datetime.utcnow()
 
 
+class ReActStep(BaseModel):
+    """A single Thought→Action→Observation in the ReAct reasoning loop."""
+    thought: str
+    action: str
+    observation: str
+    agent: str
+    step_id: str
+
+
 class TaskEvent(BaseModel):
     """SSE event emitted during task execution."""
-    event: str          # plan_ready | step_start | step_done | step_error | task_done | task_failed
+    # plan_ready | step_start | step_done | step_error | agent_thought
+    # debug_start | evaluation_done | improving | task_done | task_failed
+    event: str
     task_id: str
     data: dict[str, Any] = {}

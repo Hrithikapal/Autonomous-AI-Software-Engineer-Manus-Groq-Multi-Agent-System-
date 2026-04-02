@@ -7,767 +7,827 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css" />
   <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
-    * { font-family: 'Inter', sans-serif; }
-    code, pre { font-family: 'JetBrains Mono', monospace; }
-
-    body { background: #0a0a0f; color: #e2e8f0; }
-
-    .gradient-text {
-      background: linear-gradient(135deg, #6366f1, #8b5cf6, #06b6d4);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-
-    .card {
-      background: #111118;
-      border: 1px solid #1e1e2e;
-      border-radius: 12px;
-    }
-
-    .glow {
-      box-shadow: 0 0 30px rgba(99, 102, 241, 0.15);
-    }
-
-    .agent-pill {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      padding: 4px 12px;
-      border-radius: 999px;
-      font-size: 12px;
-      font-weight: 600;
-      letter-spacing: 0.05em;
-    }
-
-    .pulse-dot {
-      width: 8px; height: 8px;
-      border-radius: 50%;
-      animation: pulse 1.5s infinite;
-    }
-
-    @keyframes pulse {
-      0%, 100% { opacity: 1; transform: scale(1); }
-      50% { opacity: 0.5; transform: scale(0.8); }
-    }
-
-    @keyframes slideIn {
-      from { opacity: 0; transform: translateY(8px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    .slide-in { animation: slideIn 0.3s ease forwards; }
-
-    .step-item {
-      display: flex;
-      align-items: flex-start;
-      gap: 12px;
-      padding: 10px 0;
-      border-bottom: 1px solid #1e1e2e;
-    }
-    .step-item:last-child { border-bottom: none; }
-
-    .step-icon {
-      width: 28px; height: 28px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-      font-size: 12px;
-      margin-top: 2px;
-    }
-
-    .log-line {
-      padding: 6px 12px;
-      border-radius: 6px;
-      font-size: 13px;
-      margin-bottom: 4px;
-      font-family: 'JetBrains Mono', monospace;
-    }
-
-    .score-ring {
-      position: relative;
-      width: 80px; height: 80px;
-    }
-    .score-ring svg { transform: rotate(-90deg); }
-    .score-number {
-      position: absolute;
-      inset: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 20px;
-      font-weight: 700;
-    }
-
-    .tab-btn {
-      padding: 6px 16px;
-      border-radius: 6px;
-      font-size: 13px;
-      cursor: pointer;
-      transition: all 0.15s;
-      border: 1px solid transparent;
-    }
-    .tab-btn.active {
-      background: #1e1e2e;
-      border-color: #6366f1;
-      color: #a5b4fc;
-    }
-    .tab-btn:not(.active):hover {
-      background: #1a1a28;
-    }
-
-    .pipeline-node {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 4px;
-      flex: 1;
-    }
-    .pipeline-icon {
-      width: 40px; height: 40px;
-      border-radius: 10px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 18px;
-      border: 2px solid #1e1e2e;
-      transition: all 0.3s;
-    }
-    .pipeline-icon.active {
-      border-color: #6366f1;
-      box-shadow: 0 0 16px rgba(99,102,241,0.4);
-    }
-    .pipeline-icon.done {
-      border-color: #10b981;
-      background: rgba(16,185,129,0.1);
-    }
-    .pipeline-arrow {
-      flex: 0 0 20px;
-      display: flex;
-      align-items: center;
-      color: #374151;
-      font-size: 18px;
-      margin-top: -20px;
-    }
-
-    textarea:focus { outline: none; box-shadow: 0 0 0 2px rgba(99,102,241,0.4); }
-
-    ::-webkit-scrollbar { width: 6px; height: 6px; }
-    ::-webkit-scrollbar-track { background: #0a0a0f; }
-    ::-webkit-scrollbar-thumb { background: #2d2d44; border-radius: 3px; }
-
-    .hljs { background: #0d0d16 !important; border-radius: 8px; padding: 16px !important; }
+    *{font-family:'Inter',sans-serif}
+    code,pre,textarea{font-family:'JetBrains Mono',monospace}
+    body{background:#0a0a0f;color:#e2e8f0;min-height:100vh}
+    ::-webkit-scrollbar{width:5px;height:5px}
+    ::-webkit-scrollbar-track{background:#0a0a0f}
+    ::-webkit-scrollbar-thumb{background:#2d2d44;border-radius:3px}
+    .card{background:#111118;border:1px solid #1e1e2e;border-radius:12px}
+    .gradient-text{background:linear-gradient(135deg,#6366f1,#8b5cf6,#06b6d4);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+    .glow{box-shadow:0 0 30px rgba(99,102,241,0.15)}
+    @keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(.8)}}
+    @keyframes slideIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+    .slide-in{animation:slideIn .25s ease forwards}
+    .pulse-dot{width:8px;height:8px;border-radius:50%;animation:pulse 1.5s infinite}
+    .pipeline-node{display:flex;flex-direction:column;align-items:center;gap:4px;flex:1}
+    .pipeline-icon{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;border:2px solid #1e1e2e;transition:all .3s;background:#1a1a2e}
+    .pipeline-icon.active{border-color:#6366f1;box-shadow:0 0 16px rgba(99,102,241,.4);background:rgba(99,102,241,.15)}
+    .pipeline-icon.done{border-color:#10b981;background:rgba(16,185,129,.1)}
+    .pipeline-arrow{color:#374151;font-size:16px;margin-top:-18px;flex-shrink:0}
+    .tab-btn{padding:5px 14px;border-radius:6px;font-size:12px;cursor:pointer;transition:all .15s;border:1px solid transparent;color:#6b7280}
+    .tab-btn.active{background:#1e1e2e;border-color:#6366f1;color:#a5b4fc}
+    .tab-btn:not(.active):hover{background:#1a1a2e;color:#e2e8f0}
+    .step-item{display:flex;align-items:flex-start;gap:10px;padding:8px 0;border-bottom:1px solid #1a1a2e}
+    .step-item:last-child{border-bottom:none}
+    .log-line{padding:5px 10px;border-radius:5px;font-size:12px;margin-bottom:3px;font-family:'JetBrains Mono',monospace;background:#0d0d16}
+    .react-card{background:#0d0d16;border:1px solid #1e1e2e;border-radius:8px;padding:12px;margin-bottom:8px}
+    .react-section{margin-top:8px;font-size:12px;line-height:1.6}
+    .react-label{font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;margin-bottom:3px}
+    .agent-badge{display:inline-flex;align-items:center;gap:4px;padding:2px 10px;border-radius:999px;font-size:11px;font-weight:600}
+    .diff-line{font-family:'JetBrains Mono',monospace;font-size:12px;padding:1px 8px;white-space:pre}
+    .history-item{padding:10px 12px;border-radius:8px;cursor:pointer;border:1px solid transparent;transition:all .15s;margin-bottom:4px}
+    .history-item:hover{background:#1a1a2e;border-color:#2d2d44}
+    .history-item.active{background:#1a1a2e;border-color:#6366f1}
+    .score-ring{position:relative;width:72px;height:72px}
+    .score-ring svg{transform:rotate(-90deg)}
+    .score-number{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:700}
+    .hljs{background:#0d0d16!important;border-radius:8px;padding:14px!important;font-size:13px!important}
+    textarea:focus{outline:none;box-shadow:0 0 0 2px rgba(99,102,241,.4)}
+    input:focus{outline:none}
+    .metric-val{font-size:20px;font-weight:700;color:#fff}
+    .metric-label{font-size:11px;color:#6b7280;margin-top:1px}
+    #layout{display:flex;height:calc(100vh - 57px)}
+    #sidebar{width:260px;flex-shrink:0;border-right:1px solid #1e1e2e;overflow-y:auto;padding:12px}
+    #main-scroll{flex:1;overflow-y:auto;padding:20px 24px}
+    #react-sidebar{width:300px;flex-shrink:0;border-left:1px solid #1e1e2e;overflow-y:auto;padding:12px}
   </style>
 </head>
-<body class="min-h-screen">
+<body>
 
-  <!-- Header -->
-  <header class="border-b border-gray-800/50 px-6 py-4 flex items-center justify-between sticky top-0 z-50" style="background: rgba(10,10,15,0.95); backdrop-filter: blur(10px);">
-    <div class="flex items-center gap-3">
-      <div class="w-8 h-8 rounded-lg flex items-center justify-center text-lg" style="background: linear-gradient(135deg,#6366f1,#8b5cf6)">🤖</div>
-      <div>
-        <span class="font-bold text-white text-lg">Manus</span>
-        <span class="text-gray-500 text-sm ml-2">× Groq</span>
-      </div>
+<!-- ─── HEADER ─── -->
+<header style="height:57px;background:rgba(10,10,15,.97);border-bottom:1px solid #1e1e2e;backdrop-filter:blur(10px);position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:0 20px">
+  <div style="display:flex;align-items:center;gap:10px">
+    <div style="width:30px;height:30px;border-radius:8px;background:linear-gradient(135deg,#6366f1,#8b5cf6);display:flex;align-items:center;justify-content:center;font-size:15px">🤖</div>
+    <span style="font-weight:700;font-size:16px;color:#fff">Manus</span>
+    <span style="font-size:11px;background:#1a1a2e;color:#6366f1;border:1px solid #2d2d44;padding:2px 8px;border-radius:999px;font-weight:600">× Groq</span>
+  </div>
+  <div style="display:flex;align-items:center;gap:16px">
+    <!-- Session metrics inline -->
+    <div style="display:flex;align-items:center;gap:16px;padding:0 16px;border-left:1px solid #1e1e2e;border-right:1px solid #1e1e2e">
+      <div style="text-align:center"><div class="metric-val" id="m-tasks" style="font-size:15px">0</div><div class="metric-label">Tasks</div></div>
+      <div style="text-align:center"><div class="metric-val" id="m-success" style="font-size:15px;color:#34d399">—</div><div class="metric-label">Success</div></div>
+      <div style="text-align:center"><div class="metric-val" id="m-retries" style="font-size:15px;color:#fbbf24">0</div><div class="metric-label">Retries</div></div>
+      <div style="text-align:center"><div class="metric-val" id="m-avg-score" style="font-size:15px;color:#a5b4fc">—</div><div class="metric-label">Avg Score</div></div>
+      <div style="text-align:center"><div class="metric-val" id="m-latency" style="font-size:15px;color:#67e8f9">—</div><div class="metric-label">Latency</div></div>
     </div>
-    <div class="flex items-center gap-4">
-      <div id="status-badge" class="flex items-center gap-2 text-sm text-gray-400">
-        <div class="pulse-dot bg-emerald-400"></div>
-        <span>System Ready</span>
-      </div>
-      <a href="/docs" target="_blank" class="text-xs text-gray-500 hover:text-gray-300 transition-colors">API Docs ↗</a>
-      <a href="/api/v1/manus/info" target="_blank" class="text-xs text-gray-500 hover:text-gray-300 transition-colors">Architecture ↗</a>
+    <div id="status-badge" style="display:flex;align-items:center;gap:6px;font-size:13px;color:#9ca3af">
+      <div class="pulse-dot" style="background:#34d399"></div><span>Ready</span>
     </div>
-  </header>
+    <a href="/docs" target="_blank" style="font-size:12px;color:#6b7280;text-decoration:none" onmouseover="this.style.color='#e2e8f0'" onmouseout="this.style.color='#6b7280'">API Docs ↗</a>
+    <a href="/api/v1/manus/info" target="_blank" style="font-size:12px;color:#6b7280;text-decoration:none" onmouseover="this.style.color='#e2e8f0'" onmouseout="this.style.color='#6b7280'">Architecture ↗</a>
+  </div>
+</header>
 
-  <main class="max-w-7xl mx-auto px-6 py-8">
+<!-- ─── 3-COLUMN LAYOUT ─── -->
+<div id="layout">
+
+  <!-- LEFT: History sidebar -->
+  <div id="sidebar">
+    <div style="font-size:11px;font-weight:700;color:#4b5563;letter-spacing:.08em;text-transform:uppercase;margin-bottom:10px;padding:0 4px">Session History</div>
+    <div id="history-list">
+      <div style="font-size:12px;color:#374151;padding:8px 4px;font-style:italic">No tasks yet</div>
+    </div>
+  </div>
+
+  <!-- MAIN -->
+  <div id="main-scroll">
 
     <!-- Hero -->
-    <div class="text-center mb-10">
-      <h1 class="text-4xl font-bold mb-3">
+    <div style="text-align:center;margin-bottom:20px;padding-top:8px">
+      <h1 style="font-size:26px;font-weight:700;margin-bottom:6px">
         <span class="gradient-text">Autonomous AI Software Engineer</span>
       </h1>
-      <p class="text-gray-400 text-lg max-w-2xl mx-auto">
-        Describe any software task. Manus plans it, Groq reasons through it,
-        and the system researches, codes, debugs, tests, and evaluates — fully autonomously.
+      <p style="color:#6b7280;font-size:14px;max-width:560px;margin:0 auto">
+        Describe any software task. Manus plans it with ReAct reasoning, runs parallel research,
+        writes production code, self-heals errors, and evaluates quality — fully autonomously.
       </p>
     </div>
 
-    <!-- Pipeline visualization -->
-    <div class="card p-4 mb-6">
-      <div class="flex items-center justify-between">
+    <!-- Pipeline -->
+    <div class="card" style="padding:14px 16px;margin-bottom:14px">
+      <div style="display:flex;align-items:center;justify-content:space-between">
         <div class="pipeline-node">
-          <div class="pipeline-icon" id="pipe-manus" style="background:#1a1a2e">🧠</div>
-          <span class="text-xs text-gray-500">Manus</span>
+          <div class="pipeline-icon" id="pipe-manus">🧠</div>
+          <span style="font-size:10px;color:#6b7280">Manus</span>
         </div>
         <div class="pipeline-arrow">→</div>
         <div class="pipeline-node">
-          <div class="pipeline-icon" id="pipe-research" style="background:#1a1a2e">🔍</div>
-          <span class="text-xs text-gray-500">Research</span>
+          <div class="pipeline-icon" id="pipe-research">🔍</div>
+          <span style="font-size:10px;color:#6b7280">Research</span>
+          <span id="parallel-badge" style="display:none;font-size:9px;color:#6366f1;font-weight:700">⚡ Parallel</span>
         </div>
         <div class="pipeline-arrow">→</div>
         <div class="pipeline-node">
-          <div class="pipeline-icon" id="pipe-coding" style="background:#1a1a2e">💻</div>
-          <span class="text-xs text-gray-500">Coding</span>
+          <div class="pipeline-icon" id="pipe-coding">💻</div>
+          <span style="font-size:10px;color:#6b7280">Coding</span>
         </div>
         <div class="pipeline-arrow">→</div>
         <div class="pipeline-node">
-          <div class="pipeline-icon" id="pipe-debug" style="background:#1a1a2e">🐛</div>
-          <span class="text-xs text-gray-500">Debug</span>
+          <div class="pipeline-icon" id="pipe-debug">🐛</div>
+          <span style="font-size:10px;color:#6b7280">Debug</span>
         </div>
         <div class="pipeline-arrow">→</div>
         <div class="pipeline-node">
-          <div class="pipeline-icon" id="pipe-test" style="background:#1a1a2e">🧪</div>
-          <span class="text-xs text-gray-500">Test</span>
+          <div class="pipeline-icon" id="pipe-test">🧪</div>
+          <span style="font-size:10px;color:#6b7280">Test</span>
         </div>
         <div class="pipeline-arrow">→</div>
         <div class="pipeline-node">
-          <div class="pipeline-icon" id="pipe-eval" style="background:#1a1a2e">📊</div>
-          <span class="text-xs text-gray-500">Evaluate</span>
+          <div class="pipeline-icon" id="pipe-eval">📊</div>
+          <span style="font-size:10px;color:#6b7280">Evaluate</span>
         </div>
       </div>
     </div>
 
-    <!-- Input + examples -->
-    <div class="card p-6 mb-6 glow">
-      <div class="flex gap-2 mb-3 flex-wrap">
-        <span class="text-sm text-gray-400 mr-1 self-center">Try:</span>
-        <button onclick="setExample(this)" class="text-xs px-3 py-1 rounded-full border border-gray-700 text-gray-400 hover:border-indigo-500 hover:text-indigo-400 transition-all">URL shortener with analytics</button>
-        <button onclick="setExample(this)" class="text-xs px-3 py-1 rounded-full border border-gray-700 text-gray-400 hover:border-indigo-500 hover:text-indigo-400 transition-all">FastAPI todo app with JWT auth</button>
-        <button onclick="setExample(this)" class="text-xs px-3 py-1 rounded-full border border-gray-700 text-gray-400 hover:border-indigo-500 hover:text-indigo-400 transition-all">Python rate limiter with Redis</button>
-        <button onclick="setExample(this)" class="text-xs px-3 py-1 rounded-full border border-gray-700 text-gray-400 hover:border-indigo-500 hover:text-indigo-400 transition-all">Binary search tree with tests</button>
+    <!-- Input -->
+    <div class="card glow" style="padding:20px;margin-bottom:14px">
+      <div style="display:flex;gap:8px;margin-bottom:10px;flex-wrap:wrap">
+        <span style="font-size:12px;color:#6b7280;align-self:center">Try:</span>
+        <button onclick="setExample(this)" style="font-size:11px;padding:3px 10px;border-radius:999px;border:1px solid #2d2d44;background:transparent;color:#9ca3af;cursor:pointer" onmouseover="this.style.borderColor='#6366f1';this.style.color='#a5b4fc'" onmouseout="this.style.borderColor='#2d2d44';this.style.color='#9ca3af'">URL shortener with analytics</button>
+        <button onclick="setExample(this)" style="font-size:11px;padding:3px 10px;border-radius:999px;border:1px solid #2d2d44;background:transparent;color:#9ca3af;cursor:pointer" onmouseover="this.style.borderColor='#6366f1';this.style.color='#a5b4fc'" onmouseout="this.style.borderColor='#2d2d44';this.style.color='#9ca3af'">FastAPI todo app with JWT auth</button>
+        <button onclick="setExample(this)" style="font-size:11px;padding:3px 10px;border-radius:999px;border:1px solid #2d2d44;background:transparent;color:#9ca3af;cursor:pointer" onmouseover="this.style.borderColor='#6366f1';this.style.color='#a5b4fc'" onmouseout="this.style.borderColor='#2d2d44';this.style.color='#9ca3af'">Python rate limiter with Redis</button>
+        <button onclick="setExample(this)" style="font-size:11px;padding:3px 10px;border-radius:999px;border:1px solid #2d2d44;background:transparent;color:#9ca3af;cursor:pointer" onmouseover="this.style.borderColor='#6366f1';this.style.color='#a5b4fc'" onmouseout="this.style.borderColor='#2d2d44';this.style.color='#9ca3af'">Binary search tree with tests</button>
       </div>
-      <textarea
-        id="task-input"
-        rows="3"
-        placeholder="Describe the software you want to build..."
-        class="w-full bg-transparent border border-gray-700 rounded-lg p-4 text-white placeholder-gray-600 resize-none transition-all text-sm"
-        style="font-size:15px"
-      ></textarea>
-      <div class="flex justify-between items-center mt-3">
-        <span class="text-xs text-gray-600">Powered by Groq (llama-3.1-8b-instant) · ChromaDB memory · Docker sandbox</span>
-        <button
-          id="run-btn"
-          onclick="runTask()"
-          class="flex items-center gap-2 px-6 py-2.5 rounded-lg font-semibold text-sm transition-all"
-          style="background: linear-gradient(135deg,#6366f1,#8b5cf6)"
-        >
-          <span id="btn-icon">▶</span>
-          <span id="btn-text">Run Agent</span>
+      <textarea id="task-input" rows="3" placeholder="Describe the software you want to build... (Cmd+Enter to run)" style="width:100%;background:transparent;border:1px solid #2d2d44;border-radius:8px;padding:12px;color:#e2e8f0;font-size:14px;resize:none;box-sizing:border-box;transition:border .2s"></textarea>
+
+      <!-- ── Attachments bar ── -->
+      <div style="margin-top:10px;border:1px solid #1e1e2e;border-radius:8px;overflow:hidden">
+        <!-- Attached sources list -->
+        <div id="attachments-list" style="display:none;padding:8px 10px;border-bottom:1px solid #1e1e2e;display:flex;flex-wrap:wrap;gap:6px"></div>
+
+        <!-- Controls row -->
+        <div style="display:flex;align-items:center;gap:8px;padding:8px 10px;background:#0d0d16">
+          <span style="font-size:11px;color:#4b5563;font-weight:600">📎 Context:</span>
+
+          <!-- File upload -->
+          <label style="display:flex;align-items:center;gap:5px;padding:4px 10px;border-radius:6px;border:1px solid #2d2d44;font-size:12px;color:#9ca3af;cursor:pointer;transition:all .15s"
+            onmouseover="this.style.borderColor='#6366f1';this.style.color='#a5b4fc'"
+            onmouseout="this.style.borderColor='#2d2d44';this.style.color='#9ca3af'">
+            📁 Attach File
+            <input id="file-input" type="file" multiple accept=".txt,.md,.py,.js,.ts,.json,.yaml,.yml,.toml,.html,.css,.sh,.sql,.csv,.pdf" style="display:none" onchange="handleFileSelect(event)" />
+          </label>
+
+          <!-- URL input -->
+          <div style="display:flex;flex:1;align-items:center;gap:6px">
+            <input id="url-input" type="url" placeholder="Paste a URL (docs, GitHub, web page)..."
+              style="flex:1;background:#1a1a2e;border:1px solid #2d2d44;border-radius:6px;padding:4px 10px;color:#e2e8f0;font-size:12px;font-family:'Inter',sans-serif"
+              onkeydown="if(event.key==='Enter'){event.preventDefault();addURL()}" />
+            <button onclick="addURL()" style="padding:4px 10px;border-radius:6px;border:1px solid #2d2d44;background:transparent;color:#9ca3af;font-size:12px;cursor:pointer;white-space:nowrap;transition:all .15s"
+              onmouseover="this.style.borderColor='#6366f1';this.style.color='#a5b4fc'"
+              onmouseout="this.style.borderColor='#2d2d44';this.style.color='#9ca3af'">
+              + Add URL
+            </button>
+          </div>
+
+          <span id="attach-status" style="font-size:11px;color:#4b5563"></span>
+        </div>
+      </div>
+
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-top:10px">
+        <span style="font-size:11px;color:#374151">Powered by Groq · ChromaDB · RAG · Parallel agents · ReAct</span>
+        <button id="run-btn" onclick="runTask()" style="display:flex;align-items:center;gap:7px;padding:9px 22px;border-radius:8px;border:none;background:linear-gradient(135deg,#6366f1,#8b5cf6);color:white;font-size:13px;font-weight:600;cursor:pointer;transition:opacity .2s">
+          <span id="btn-icon">▶</span><span id="btn-text">Run Agent</span>
         </button>
       </div>
     </div>
 
-    <!-- Output grid -->
-    <div id="output-section" class="hidden">
-      <div class="grid grid-cols-3 gap-4 mb-4">
+    <!-- Output section -->
+    <div id="output-section" style="display:none">
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:12px">
 
-        <!-- Live log -->
-        <div class="card p-4 col-span-1">
-          <div class="flex items-center justify-between mb-3">
-            <h3 class="text-sm font-semibold text-gray-300">Live Agent Log</h3>
-            <div id="log-spinner" class="hidden">
-              <div class="pulse-dot bg-indigo-400"></div>
-            </div>
+        <!-- Log -->
+        <div class="card" style="padding:14px">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
+            <span style="font-size:13px;font-weight:600;color:#d1d5db">Live Log</span>
+            <div id="log-spinner" style="display:none"><div class="pulse-dot" style="background:#6366f1"></div></div>
           </div>
-          <div id="log-container" class="space-y-1 overflow-y-auto" style="max-height:460px"></div>
+          <div id="log-container" style="max-height:380px;overflow-y:auto"></div>
         </div>
 
-        <!-- Plan steps -->
-        <div class="card p-4 col-span-1">
-          <h3 class="text-sm font-semibold text-gray-300 mb-3">Execution Plan</h3>
-          <div id="plan-container">
-            <p class="text-xs text-gray-600 italic">Waiting for Manus to plan...</p>
+        <!-- Plan -->
+        <div class="card" style="padding:14px">
+          <span style="font-size:13px;font-weight:600;color:#d1d5db">Execution Plan</span>
+          <div id="plan-container" style="margin-top:10px">
+            <p style="font-size:12px;color:#374151;font-style:italic">Waiting for Manus...</p>
           </div>
         </div>
 
         <!-- Evaluation -->
-        <div class="card p-4 col-span-1">
-          <h3 class="text-sm font-semibold text-gray-300 mb-3">Evaluation</h3>
-          <div id="eval-container">
-            <p class="text-xs text-gray-600 italic">Waiting for evaluation...</p>
+        <div class="card" style="padding:14px">
+          <span style="font-size:13px;font-weight:600;color:#d1d5db">Evaluation</span>
+          <div id="eval-container" style="margin-top:10px">
+            <p style="font-size:12px;color:#374151;font-style:italic">Waiting for evaluation...</p>
           </div>
         </div>
       </div>
 
-      <!-- Code output -->
-      <div id="code-section" class="card p-4 hidden">
-        <div class="flex items-center justify-between mb-3">
-          <h3 class="text-sm font-semibold text-gray-300">Generated Files</h3>
-          <div id="file-tabs" class="flex gap-1 flex-wrap"></div>
+      <!-- Diff panel -->
+      <div id="diff-panel" class="card" style="padding:14px;margin-bottom:12px;display:none">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px">
+          <span style="font-size:13px;font-weight:600;color:#d1d5db">🔧 Debug Fix — Code Diff</span>
+          <span style="font-size:11px;background:rgba(239,68,68,.15);color:#f87171;padding:2px 8px;border-radius:999px;border:1px solid rgba(239,68,68,.3)">Auto-healed</span>
+        </div>
+        <div id="diff-content" style="background:#0d0d16;border-radius:8px;padding:10px;max-height:200px;overflow-y:auto"></div>
+      </div>
+
+      <!-- Code files -->
+      <div id="code-section" class="card" style="padding:14px;display:none">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;flex-wrap:wrap;gap:8px">
+          <div style="display:flex;align-items:center;gap:10px">
+            <span style="font-size:13px;font-weight:600;color:#d1d5db">Generated Files</span>
+            <span id="token-display" style="font-size:11px;color:#6b7280"></span>
+          </div>
+          <div style="display:flex;align-items:center;gap:8px">
+            <div id="file-tabs" style="display:flex;gap:4px;flex-wrap:wrap"></div>
+            <button id="download-btn" onclick="downloadZip()" style="display:flex;align-items:center;gap:5px;padding:5px 12px;border-radius:6px;border:1px solid #2d2d44;background:transparent;color:#9ca3af;font-size:12px;cursor:pointer;transition:all .15s" onmouseover="this.style.borderColor='#10b981';this.style.color='#34d399'" onmouseout="this.style.borderColor='#2d2d44';this.style.color='#9ca3af'">
+              ⬇ Download ZIP
+            </button>
+          </div>
         </div>
         <div id="code-output"></div>
       </div>
     </div>
 
-  </main>
+  </div><!-- /main -->
 
-  <!-- Chat Panel -->
-  <div id="chat-panel" style="
-    position: fixed; bottom: 24px; right: 24px;
-    width: 380px; z-index: 100;
-    display: flex; flex-direction: column; gap: 0;
-  ">
-    <!-- Toggle button -->
-    <div style="display:flex; justify-content:flex-end; margin-bottom:8px">
-      <button onclick="toggleChat()" id="chat-toggle" style="
-        background: linear-gradient(135deg,#6366f1,#8b5cf6);
-        border: none; border-radius: 999px; padding: 10px 18px;
-        color: white; font-size: 14px; font-weight: 600; cursor: pointer;
-        display: flex; align-items: center; gap: 8px;
-        box-shadow: 0 4px 20px rgba(99,102,241,0.4);
-      ">
-        <span id="chat-toggle-icon">💬</span>
-        <span id="chat-toggle-text">Chat with Manus</span>
-        <span id="chat-unread" style="display:none; background:#ef4444; border-radius:999px; padding:1px 7px; font-size:11px">1</span>
-      </button>
-    </div>
-
-    <!-- Chat window -->
-    <div id="chat-window" style="display:none; background:#111118; border:1px solid #1e1e2e; border-radius:16px; overflow:hidden; box-shadow: 0 8px 40px rgba(0,0,0,0.6);">
-      <!-- Header -->
-      <div style="background:#0d0d16; padding:14px 16px; border-bottom:1px solid #1e1e2e; display:flex; align-items:center; justify-content:space-between;">
-        <div style="display:flex; align-items:center; gap:10px">
-          <div style="width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,#6366f1,#8b5cf6);display:flex;align-items:center;justify-content:center;font-size:16px">🤖</div>
-          <div>
-            <div style="font-weight:600;color:white;font-size:14px">Manus</div>
-            <div style="font-size:11px;color:#6366f1" id="chat-status-text">Ask me anything about your session</div>
-          </div>
-        </div>
-        <button onclick="toggleChat()" style="background:none;border:none;color:#6b7280;cursor:pointer;font-size:18px;padding:4px">×</button>
-      </div>
-
-      <!-- Messages -->
-      <div id="chat-messages" style="height:360px;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:10px;">
-        <div class="chat-msg assistant slide-in" style="display:flex;gap:8px;align-items:flex-start">
-          <div style="width:26px;height:26px;border-radius:50%;background:linear-gradient(135deg,#6366f1,#8b5cf6);display:flex;align-items:center;justify-content:center;font-size:12px;flex-shrink:0">🤖</div>
-          <div style="background:#1a1a2e;border-radius:0 10px 10px 10px;padding:10px 14px;font-size:13px;color:#e2e8f0;max-width:280px;line-height:1.5">
-            Hi! I'm Manus. Run a task and I'll have full context to discuss what I built, the decisions I made, or anything else you want to know.
-          </div>
-        </div>
-      </div>
-
-      <!-- Input -->
-      <div style="padding:12px;border-top:1px solid #1e1e2e;display:flex;gap:8px;background:#0d0d16">
-        <input
-          id="chat-input"
-          type="text"
-          placeholder="Ask about what I built..."
-          style="flex:1;background:#1a1a2e;border:1px solid #2d2d44;border-radius:8px;padding:9px 12px;color:white;font-size:13px;outline:none"
-          onkeydown="if(event.key==='Enter')sendChat()"
-        />
-        <button onclick="sendChat()" id="chat-send-btn" style="
-          background:linear-gradient(135deg,#6366f1,#8b5cf6);
-          border:none;border-radius:8px;padding:9px 14px;
-          color:white;font-size:13px;cursor:pointer;font-weight:600;
-          white-space:nowrap;
-        ">Send</button>
-      </div>
+  <!-- RIGHT: ReAct Reasoning panel -->
+  <div id="react-sidebar">
+    <div style="font-size:11px;font-weight:700;color:#4b5563;letter-spacing:.08em;text-transform:uppercase;margin-bottom:4px;padding:0 4px">🧠 ReAct Trace</div>
+    <div style="font-size:11px;color:#374151;margin-bottom:10px;padding:0 4px">Thought → Action → Observation</div>
+    <div id="react-container">
+      <div style="font-size:12px;color:#374151;padding:8px 4px;font-style:italic">Reasoning steps will appear here...</div>
     </div>
   </div>
 
-  <script>
-    // ---------------------------------------------------------------
-    // Session & Chat state
-    // ---------------------------------------------------------------
-    const SESSION_ID = 'session_' + Math.random().toString(36).slice(2);
-    let currentTaskId = null;
-    let chatOpen = false;
+</div><!-- /layout -->
 
-    function toggleChat() {
-      chatOpen = !chatOpen;
-      document.getElementById('chat-window').style.display = chatOpen ? 'block' : 'none';
-      document.getElementById('chat-toggle-text').textContent = chatOpen ? 'Close Chat' : 'Chat with Manus';
-      document.getElementById('chat-toggle-icon').textContent = chatOpen ? '✕' : '💬';
-      document.getElementById('chat-unread').style.display = 'none';
-      if (chatOpen) document.getElementById('chat-input').focus();
-    }
-
-    function appendChatMsg(content, role) {
-      const container = document.getElementById('chat-messages');
-      const isUser = role === 'user';
-      const div = document.createElement('div');
-      div.className = 'chat-msg slide-in';
-      div.style.cssText = `display:flex;gap:8px;align-items:flex-start;${isUser ? 'flex-direction:row-reverse' : ''}`;
-
-      const avatar = isUser
-        ? `<div style="width:26px;height:26px;border-radius:50%;background:#1e3a5f;display:flex;align-items:center;justify-content:center;font-size:12px;flex-shrink:0">👤</div>`
-        : `<div style="width:26px;height:26px;border-radius:50%;background:linear-gradient(135deg,#6366f1,#8b5cf6);display:flex;align-items:center;justify-content:center;font-size:12px;flex-shrink:0">🤖</div>`;
-
-      const bubble = `<div style="background:${isUser ? '#1e3a5f' : '#1a1a2e'};border-radius:${isUser ? '10px 0 10px 10px' : '0 10px 10px 10px'};padding:10px 14px;font-size:13px;color:#e2e8f0;max-width:280px;line-height:1.6;white-space:pre-wrap">${escapeHtml(content)}</div>`;
-
-      div.innerHTML = avatar + bubble;
-      container.appendChild(div);
-      container.scrollTop = container.scrollHeight;
-    }
-
-    function setChatStatus(text, color='#6366f1') {
-      const el = document.getElementById('chat-status-text');
-      el.textContent = text;
-      el.style.color = color;
-    }
-
-    async function sendChat() {
-      const input = document.getElementById('chat-input');
-      const message = input.value.trim();
-      if (!message) return;
-
-      input.value = '';
-      appendChatMsg(message, 'user');
-      setChatStatus('Thinking...', '#f59e0b');
-
-      const btn = document.getElementById('chat-send-btn');
-      btn.disabled = true;
-      btn.textContent = '...';
-
-      try {
-        const resp = await fetch('/api/v1/chat/', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            message,
-            session_id: SESSION_ID,
-            task_id: currentTaskId,
-          }),
-        });
-        const data = await resp.json();
-        appendChatMsg(data.reply, 'assistant');
-        setChatStatus('Online', '#6366f1');
-      } catch (err) {
-        appendChatMsg('Sorry, something went wrong.', 'assistant');
-        setChatStatus('Error', '#ef4444');
-      } finally {
-        btn.disabled = false;
-        btn.textContent = 'Send';
-      }
-
-      // Show unread badge if chat is closed
-      if (!chatOpen) {
-        document.getElementById('chat-unread').style.display = 'inline';
-      }
-    }
-
-  </script>
-
-  <script>
-    const AGENT_COLORS = {
-      research: { bg: 'rgba(59,130,246,0.15)', border: '#3b82f6', text: '#93c5fd', emoji: '🔍' },
-      coding:   { bg: 'rgba(168,85,247,0.15)', border: '#a855f7', text: '#d8b4fe', emoji: '💻' },
-      debug:    { bg: 'rgba(239,68,68,0.15)',  border: '#ef4444', text: '#fca5a5', emoji: '🐛' },
-      test:     { bg: 'rgba(234,179,8,0.15)',  border: '#eab308', text: '#fde047', emoji: '🧪' },
-      manus:    { bg: 'rgba(99,102,241,0.15)', border: '#6366f1', text: '#a5b4fc', emoji: '🧠' },
-    };
-
-    let currentFiles = {};
-    let activeTab = null;
-
-    function setExample(btn) {
-      document.getElementById('task-input').value = btn.textContent;
-    }
-
-    function addLog(message, type = 'info') {
-      const container = document.getElementById('log-container');
-      const colors = {
-        info:    'color:#94a3b8',
-        success: 'color:#34d399',
-        error:   'color:#f87171',
-        warning: 'color:#fbbf24',
-        agent:   'color:#a5b4fc',
-        system:  'color:#64748b',
-      };
-      const div = document.createElement('div');
-      div.className = 'log-line slide-in';
-      div.style.cssText = `background:#0d0d16; ${colors[type] || colors.info}`;
-      div.textContent = `${new Date().toLocaleTimeString()} › ${message}`;
-      container.appendChild(div);
-      container.scrollTop = container.scrollHeight;
-    }
-
-    function setPipelineState(agent, state) {
-      const map = { research: 'pipe-research', coding: 'pipe-coding', debug: 'pipe-debug', test: 'pipe-test', evaluation: 'pipe-eval', manus: 'pipe-manus' };
-      const id = map[agent];
-      if (!id) return;
-      const el = document.getElementById(id);
-      el.className = 'pipeline-icon ' + state;
-      if (state === 'active') {
-        el.style.background = 'rgba(99,102,241,0.2)';
-      } else if (state === 'done') {
-        el.style.background = 'rgba(16,185,129,0.15)';
-      }
-    }
-
-    function renderPlan(steps) {
-      const container = document.getElementById('plan-container');
-      container.innerHTML = '';
-      steps.forEach(step => {
-        const color = AGENT_COLORS[step.agent] || AGENT_COLORS.manus;
-        const div = document.createElement('div');
-        div.id = `step-${step.id}`;
-        div.className = 'step-item slide-in';
-        div.innerHTML = `
-          <div class="step-icon" style="background:${color.bg}; border: 1px solid ${color.border}">
-            <span id="step-icon-${step.id}">⏳</span>
-          </div>
-          <div class="flex-1 min-w-0">
-            <div class="flex items-center gap-2">
-              <span class="agent-pill" style="background:${color.bg}; color:${color.text}">${color.emoji} ${step.agent}</span>
-            </div>
-            <p class="text-xs text-gray-400 mt-1 leading-relaxed">${step.description}</p>
-          </div>`;
-        container.appendChild(div);
-      });
-    }
-
-    function updateStep(stepId, status) {
-      const iconEl = document.getElementById(`step-icon-${stepId}`);
-      if (!iconEl) return;
-      const icons = { completed: '✅', failed: '❌', in_progress: '⚡', retrying: '🔄' };
-      iconEl.textContent = icons[status] || '⏳';
-    }
-
-    function renderEvaluation(eval_data) {
-      const container = document.getElementById('eval-container');
-      const score = eval_data.score || 0;
-      const color = score >= 8 ? '#10b981' : score >= 6 ? '#f59e0b' : '#ef4444';
-      const circumference = 2 * Math.PI * 30;
-      const offset = circumference - (score / 10) * circumference;
-
-      container.innerHTML = `
-        <div class="flex items-center gap-4 mb-4">
-          <div class="score-ring">
-            <svg width="80" height="80" viewBox="0 0 80 80">
-              <circle cx="40" cy="40" r="30" fill="none" stroke="#1e1e2e" stroke-width="6"/>
-              <circle cx="40" cy="40" r="30" fill="none" stroke="${color}" stroke-width="6"
-                stroke-dasharray="${circumference}" stroke-dashoffset="${offset}"
-                stroke-linecap="round" style="transition:stroke-dashoffset 1s ease"/>
-            </svg>
-            <div class="score-number" style="color:${color}">${score.toFixed(1)}</div>
-          </div>
-          <div>
-            <div class="text-xs text-gray-500 mb-1">Overall Score</div>
-            <div class="text-sm font-semibold" style="color:${color}">${score >= 8 ? 'Excellent' : score >= 6 ? 'Good' : 'Needs Work'}</div>
-            <div class="text-xs text-gray-600 mt-1">${eval_data.passed ? '✅ Passed' : '❌ Not passed'}</div>
-          </div>
-        </div>
-        <div class="space-y-2 mb-3">
-          ${renderMetricBar('Correctness', eval_data.correctness_score)}
-          ${renderMetricBar('Quality', eval_data.quality_score)}
-          ${renderMetricBar('Test Pass Rate', eval_data.test_pass_rate * 10)}
-        </div>
-        <p class="text-xs text-gray-400 leading-relaxed border-t border-gray-800 pt-3">${eval_data.feedback || ''}</p>
-        ${eval_data.suggestions?.length ? `
-          <div class="mt-3">
-            <p class="text-xs font-semibold text-gray-500 mb-1">Suggestions</p>
-            ${eval_data.suggestions.map(s => `<p class="text-xs text-gray-600 mb-1">• ${s}</p>`).join('')}
-          </div>` : ''}`;
-    }
-
-    function renderMetricBar(label, value) {
-      const pct = Math.min(100, (value / 10) * 100);
-      const color = pct >= 70 ? '#10b981' : pct >= 50 ? '#f59e0b' : '#ef4444';
-      return `
+<!-- ─── CHAT WIDGET ─── -->
+<div style="position:fixed;bottom:20px;right:20px;z-index:200;display:flex;flex-direction:column;align-items:flex-end;gap:8px">
+  <div id="chat-window" style="display:none;width:340px;background:#111118;border:1px solid #1e1e2e;border-radius:14px;overflow:hidden;box-shadow:0 8px 40px rgba(0,0,0,.7)">
+    <div style="background:#0d0d16;padding:12px 14px;border-bottom:1px solid #1e1e2e;display:flex;align-items:center;justify-content:space-between">
+      <div style="display:flex;align-items:center;gap:8px">
+        <div style="width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,#6366f1,#8b5cf6);display:flex;align-items:center;justify-content:center;font-size:14px">🤖</div>
         <div>
-          <div class="flex justify-between text-xs mb-1">
-            <span class="text-gray-500">${label}</span>
-            <span style="color:${color}">${value?.toFixed(1) || '—'}</span>
-          </div>
-          <div class="h-1.5 rounded-full" style="background:#1e1e2e">
-            <div class="h-1.5 rounded-full transition-all duration-1000" style="width:${pct}%;background:${color}"></div>
-          </div>
-        </div>`;
-    }
+          <div style="font-weight:600;color:#fff;font-size:13px">Manus</div>
+          <div id="chat-status-text" style="font-size:11px;color:#6366f1">Ask me about this session</div>
+        </div>
+      </div>
+      <button onclick="toggleChat()" style="background:none;border:none;color:#6b7280;cursor:pointer;font-size:18px;line-height:1">×</button>
+    </div>
+    <div id="chat-messages" style="height:300px;overflow-y:auto;padding:12px;display:flex;flex-direction:column;gap:8px">
+      <div style="display:flex;gap:6px;align-items:flex-start" class="slide-in">
+        <div style="width:24px;height:24px;border-radius:50%;background:linear-gradient(135deg,#6366f1,#8b5cf6);display:flex;align-items:center;justify-content:center;font-size:11px;flex-shrink:0">🤖</div>
+        <div style="background:#1a1a2e;border-radius:0 8px 8px 8px;padding:8px 12px;font-size:12px;color:#e2e8f0;max-width:260px;line-height:1.5">
+          Hi! I'm Manus. Run a task and ask me anything — what I built, why I made certain decisions, or how to improve it.
+        </div>
+      </div>
+    </div>
+    <div style="padding:10px;border-top:1px solid #1e1e2e;display:flex;gap:7px;background:#0d0d16">
+      <input id="chat-input" type="text" placeholder="Ask about what I built..." onkeydown="if(event.key==='Enter')sendChat()"
+        style="flex:1;background:#1a1a2e;border:1px solid #2d2d44;border-radius:7px;padding:8px 10px;color:#e2e8f0;font-size:12px;font-family:'Inter',sans-serif" />
+      <button onclick="sendChat()" id="chat-send-btn"
+        style="background:linear-gradient(135deg,#6366f1,#8b5cf6);border:none;border-radius:7px;padding:8px 12px;color:#fff;font-size:12px;font-weight:600;cursor:pointer">Send</button>
+    </div>
+  </div>
+  <button onclick="toggleChat()" id="chat-toggle"
+    style="display:flex;align-items:center;gap:7px;padding:10px 16px;border-radius:999px;border:none;background:linear-gradient(135deg,#6366f1,#8b5cf6);color:#fff;font-size:13px;font-weight:600;cursor:pointer;box-shadow:0 4px 20px rgba(99,102,241,.4)">
+    <span id="chat-icon">💬</span>
+    <span id="chat-label">Chat with Manus</span>
+    <span id="chat-unread" style="display:none;background:#ef4444;border-radius:999px;padding:1px 6px;font-size:10px">1</span>
+  </button>
+</div>
 
-    function renderFiles(files) {
-      currentFiles = files;
-      if (!files || Object.keys(files).length === 0) return;
+<script>
+// ─── State ───────────────────────────────────────────────
+const SESSION_ID = 'sess_' + Math.random().toString(36).slice(2,10);
+let currentTaskId = null;
+let chatOpen = false;
+let currentFiles = {};
+const metrics = { tasks:0, successes:0, retries:0, scores:[], lastLatencyMs:null };
 
-      document.getElementById('code-section').classList.remove('hidden');
-      const tabsEl = document.getElementById('file-tabs');
-      tabsEl.innerHTML = '';
+const AGENT_COLORS = {
+  manus:    { bg:'rgba(99,102,241,.15)',  border:'#6366f1', text:'#a5b4fc', emoji:'🧠' },
+  research: { bg:'rgba(59,130,246,.15)',  border:'#3b82f6', text:'#93c5fd', emoji:'🔍' },
+  coding:   { bg:'rgba(168,85,247,.15)',  border:'#a855f7', text:'#d8b4fe', emoji:'💻' },
+  debug:    { bg:'rgba(239,68,68,.15)',   border:'#ef4444', text:'#fca5a5', emoji:'🐛' },
+  test:     { bg:'rgba(234,179,8,.15)',   border:'#eab308', text:'#fde047', emoji:'🧪' },
+  evaluation:{ bg:'rgba(16,185,129,.15)', border:'#10b981', text:'#6ee7b7', emoji:'📊' },
+};
 
-      Object.keys(files).forEach((fname, i) => {
-        const btn = document.createElement('button');
-        btn.className = 'tab-btn' + (i === 0 ? ' active' : '');
-        btn.textContent = fname;
-        btn.onclick = () => showFile(fname, btn);
-        tabsEl.appendChild(btn);
-      });
+// ─── Utilities ───────────────────────────────────────────
+function escapeHtml(t){return t.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
 
-      showFile(Object.keys(files)[0]);
-    }
+function setExample(btn){ document.getElementById('task-input').value = btn.textContent.trim() }
 
-    function showFile(fname, btn) {
-      if (btn) {
-        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-      }
-      const content = currentFiles[fname] || '';
-      const ext = fname.split('.').pop();
-      const langMap = { py: 'python', js: 'javascript', ts: 'typescript', json: 'json', yml: 'yaml', yaml: 'yaml', sh: 'bash', md: 'markdown', txt: 'plaintext', toml: 'toml' };
-      const lang = langMap[ext] || 'plaintext';
+function updateMetricsBar(){
+  document.getElementById('m-tasks').textContent = metrics.tasks;
+  if(metrics.tasks){
+    const r = Math.round(metrics.successes/metrics.tasks*100);
+    const el = document.getElementById('m-success');
+    el.textContent = r+'%';
+    el.style.color = r>=70?'#34d399':r>=40?'#fbbf24':'#f87171';
+  }
+  document.getElementById('m-retries').textContent = metrics.retries;
+  if(metrics.scores.length){
+    const avg = (metrics.scores.reduce((a,b)=>a+b,0)/metrics.scores.length).toFixed(1);
+    document.getElementById('m-avg-score').textContent = avg;
+  }
+  if(metrics.lastLatencyMs) document.getElementById('m-latency').textContent = (metrics.lastLatencyMs/1000).toFixed(1)+'s';
+}
 
-      const codeEl = document.getElementById('code-output');
-      codeEl.innerHTML = `<pre><code class="language-${lang}">${escapeHtml(content)}</code></pre>`;
-      hljs.highlightAll();
-    }
+// ─── Log ─────────────────────────────────────────────────
+function addLog(msg, type='info'){
+  const colors = {info:'#94a3b8',success:'#34d399',error:'#f87171',warning:'#fbbf24',agent:'#a5b4fc',system:'#4b5563'};
+  const el = document.createElement('div');
+  el.className='log-line slide-in';
+  el.style.color = colors[type]||colors.info;
+  el.textContent = new Date().toLocaleTimeString()+' › '+msg;
+  const c = document.getElementById('log-container');
+  c.appendChild(el);
+  c.scrollTop = c.scrollHeight;
+}
 
-    function escapeHtml(text) {
-      return text.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
-    }
+// ─── Pipeline ────────────────────────────────────────────
+function setPipelineState(agent, state){
+  const map={research:'pipe-research',coding:'pipe-coding',debug:'pipe-debug',test:'pipe-test',evaluation:'pipe-eval',manus:'pipe-manus'};
+  const el = document.getElementById(map[agent]);
+  if(!el) return;
+  el.className='pipeline-icon '+(state||'');
+  if(state==='active') el.style.background='rgba(99,102,241,.2)';
+  else if(state==='done') el.style.background='rgba(16,185,129,.15)';
+  else el.style.background='#1a1a2e';
+}
 
-    async function runTask() {
-      const desc = document.getElementById('task-input').value.trim();
-      if (!desc) return;
+// ─── Plan ────────────────────────────────────────────────
+function renderPlan(steps){
+  const c = document.getElementById('plan-container');
+  c.innerHTML='';
+  steps.forEach(s=>{
+    const col = AGENT_COLORS[s.agent]||AGENT_COLORS.manus;
+    const div = document.createElement('div');
+    div.id='step-'+s.id;
+    div.className='step-item slide-in';
+    div.innerHTML=`
+      <div style="width:26px;height:26px;border-radius:50%;background:${col.bg};border:1px solid ${col.border};display:flex;align-items:center;justify-content:center;font-size:11px;flex-shrink:0;margin-top:1px">
+        <span id="sicon-${s.id}">⏳</span>
+      </div>
+      <div style="flex:1;min-width:0">
+        <div style="display:flex;align-items:center;gap:6px;margin-bottom:2px">
+          <span class="agent-badge" style="background:${col.bg};color:${col.text}">${col.emoji} ${s.agent}</span>
+        </div>
+        <p style="font-size:11px;color:#6b7280;line-height:1.4;margin:0">${escapeHtml(s.description.slice(0,80))}</p>
+      </div>`;
+    c.appendChild(div);
+  });
+}
 
-      // Reset UI
-      document.getElementById('output-section').classList.remove('hidden');
-      document.getElementById('log-container').innerHTML = '';
-      document.getElementById('plan-container').innerHTML = '<p class="text-xs text-gray-600 italic">Planning...</p>';
-      document.getElementById('eval-container').innerHTML = '<p class="text-xs text-gray-600 italic">Waiting for evaluation...</p>';
-      document.getElementById('code-section').classList.add('hidden');
-      document.getElementById('file-tabs').innerHTML = '';
-      document.getElementById('code-output').innerHTML = '';
-      document.getElementById('log-spinner').classList.remove('hidden');
-      ['pipe-manus','pipe-research','pipe-coding','pipe-debug','pipe-test','pipe-eval'].forEach(id => {
-        const el = document.getElementById(id);
-        el.className = 'pipeline-icon';
-        el.style.background = '#1a1a2e';
-      });
+function updateStep(id, status){
+  const el = document.getElementById('sicon-'+id);
+  if(!el) return;
+  el.textContent = {completed:'✅',failed:'❌',in_progress:'⚡',retrying:'🔄'}[status]||'⏳';
+}
 
-      const btn = document.getElementById('run-btn');
-      btn.disabled = true;
-      btn.style.opacity = '0.6';
-      document.getElementById('btn-text').textContent = 'Running...';
-      document.getElementById('btn-icon').textContent = '⏳';
+// ─── Evaluation ──────────────────────────────────────────
+function renderEvaluation(ev){
+  const c = document.getElementById('eval-container');
+  const score = ev.score||0;
+  const color = score>=8?'#10b981':score>=6?'#f59e0b':'#ef4444';
+  const circ = 2*Math.PI*28;
+  const offset = circ-(score/10)*circ;
+  c.innerHTML=`
+    <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px">
+      <div class="score-ring">
+        <svg width="72" height="72" viewBox="0 0 72 72">
+          <circle cx="36" cy="36" r="28" fill="none" stroke="#1e1e2e" stroke-width="5"/>
+          <circle cx="36" cy="36" r="28" fill="none" stroke="${color}" stroke-width="5"
+            stroke-dasharray="${circ}" stroke-dashoffset="${offset}" stroke-linecap="round"
+            style="transition:stroke-dashoffset 1s ease"/>
+        </svg>
+        <div class="score-number" style="color:${color}">${score.toFixed(1)}</div>
+      </div>
+      <div>
+        <div style="font-size:12px;color:#6b7280;margin-bottom:2px">Overall Score</div>
+        <div style="font-size:14px;font-weight:600;color:${color}">${score>=8?'Excellent':score>=6?'Good':'Needs Work'}</div>
+        <div style="font-size:11px;color:#6b7280;margin-top:2px">${ev.passed?'✅ Passed':'❌ Not passed'}</div>
+      </div>
+    </div>
+    ${bar('Correctness', ev.correctness_score)}
+    ${bar('Quality', ev.quality_score)}
+    ${bar('Test Pass Rate', (ev.test_pass_rate||0)*10)}
+    <p style="font-size:11px;color:#9ca3af;line-height:1.5;border-top:1px solid #1e1e2e;padding-top:8px;margin-top:8px">${ev.feedback||''}</p>`;
+}
 
-      setPipelineState('manus', 'active');
-      addLog('Manus initialised — sending task to Groq', 'agent');
+function bar(label, val){
+  const pct = Math.min(100,(val/10)*100);
+  const color = pct>=70?'#10b981':pct>=50?'#f59e0b':'#ef4444';
+  return `<div style="margin-bottom:6px">
+    <div style="display:flex;justify-content:space-between;font-size:11px;margin-bottom:3px">
+      <span style="color:#6b7280">${label}</span>
+      <span style="color:${color}">${val!=null?val.toFixed(1):'—'}</span>
+    </div>
+    <div style="height:4px;border-radius:2px;background:#1e1e2e">
+      <div style="height:4px;border-radius:2px;background:${color};width:${pct}%;transition:width 1s ease"></div>
+    </div></div>`;
+}
 
-      try {
-        const response = await fetch('/api/v1/agent/run', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ description: desc }),
-        });
+// ─── Files & Code ─────────────────────────────────────────
+function renderFiles(files){
+  if(!files||!Object.keys(files).length) return;
+  currentFiles = files;
+  document.getElementById('code-section').style.display='block';
+  const tabs = document.getElementById('file-tabs');
+  tabs.innerHTML='';
+  Object.keys(files).forEach((f,i)=>{
+    const btn = document.createElement('button');
+    btn.className='tab-btn'+(i===0?' active':'');
+    btn.textContent=f;
+    btn.onclick=()=>showFile(f,btn);
+    tabs.appendChild(btn);
+  });
+  showFile(Object.keys(files)[0]);
+}
 
-        const reader = response.body.getReader();
-        const decoder = new TextDecoder();
-        let buffer = '';
+function showFile(fname, btn){
+  if(btn){
+    document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+  }
+  const ext = fname.split('.').pop();
+  const langMap={py:'python',js:'javascript',ts:'typescript',json:'json',yml:'yaml',yaml:'yaml',sh:'bash',md:'markdown',txt:'plaintext',toml:'toml',html:'html',css:'css'};
+  const lang = langMap[ext]||'plaintext';
+  document.getElementById('code-output').innerHTML=`<pre><code class="language-${lang}">${escapeHtml(currentFiles[fname]||'')}</code></pre>`;
+  document.querySelectorAll('pre code').forEach(el=>hljs.highlightElement(el));
+}
 
-        while (true) {
-          const { done, value } = await reader.read();
-          if (done) break;
-          buffer += decoder.decode(value, { stream: true });
-          const lines = buffer.split('\n');
-          buffer = lines.pop();
+async function downloadZip(){
+  if(!currentTaskId) return;
+  const a = document.createElement('a');
+  a.href = `/api/v1/tasks/${currentTaskId}/download`;
+  a.download='manus_output.zip';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+}
 
-          for (const line of lines) {
-            if (line.startsWith('event: ')) {
-              const eventType = line.slice(7).trim();
-              continue;
-            }
-            if (line.startsWith('data: ')) {
-              try {
-                const data = JSON.parse(line.slice(6));
-                handleEvent(data);
-              } catch (_) {}
-            }
-          }
-        }
-      } catch (err) {
-        addLog(`Error: ${err.message}`, 'error');
-      } finally {
-        document.getElementById('log-spinner').classList.add('hidden');
-        btn.disabled = false;
-        btn.style.opacity = '1';
-        document.getElementById('btn-text').textContent = 'Run Agent';
-        document.getElementById('btn-icon').textContent = '▶';
-      }
-    }
+// ─── ReAct Trace ─────────────────────────────────────────
+function renderReactStep(d){
+  const col = AGENT_COLORS[d.agent]||AGENT_COLORS.manus;
+  const c = document.getElementById('react-container');
+  // Clear placeholder
+  if(c.querySelector('p')) c.innerHTML='';
+  const card = document.createElement('div');
+  card.className='react-card slide-in';
+  card.innerHTML=`
+    <span class="agent-badge" style="background:${col.bg};color:${col.text};border:1px solid ${col.border}">${col.emoji} ${d.agent}</span>
+    <div class="react-section">
+      <div class="react-label" style="color:#a5b4fc">💭 Thought</div>
+      <div style="color:#d1d5db">${escapeHtml(d.thought||'')}</div>
+    </div>
+    <div class="react-section">
+      <div class="react-label" style="color:#fbbf24">⚡ Action</div>
+      <div style="color:#d1d5db">${escapeHtml(d.action||'')}</div>
+    </div>
+    <div class="react-section">
+      <div class="react-label" style="color:#34d399">👁 Observation</div>
+      <div style="color:#9ca3af">${escapeHtml((d.observation||'').slice(0,200))}</div>
+    </div>`;
+  c.appendChild(card);
+  c.scrollTop = c.scrollHeight;
+}
 
-    function handleEvent(data) {
-      const event = data.event;
+// ─── Diff ────────────────────────────────────────────────
+function renderDiff(diffText){
+  if(!diffText) return;
+  const panel = document.getElementById('diff-panel');
+  panel.style.display='block';
+  const content = document.getElementById('diff-content');
+  content.innerHTML = diffText.split('\n').map(line=>{
+    let color='#6b7280', bg='transparent';
+    if(line.startsWith('+')&&!line.startsWith('+++')){ color='#34d399'; bg='rgba(16,185,129,.08)'; }
+    else if(line.startsWith('-')&&!line.startsWith('---')){ color='#f87171'; bg='rgba(239,68,68,.08)'; }
+    else if(line.startsWith('@@')){ color='#a5b4fc'; bg='rgba(99,102,241,.08)'; }
+    return `<div class="diff-line" style="color:${color};background:${bg}">${escapeHtml(line)}</div>`;
+  }).join('');
+}
 
-      if (event === 'plan_ready') {
-        setPipelineState('manus', 'done');
-        renderPlan(data.data.steps || []);
-        addLog(`Manus created a ${data.data.steps?.length}-step plan`, 'agent');
-      }
+// ─── History ─────────────────────────────────────────────
+function addToHistory(task){
+  const list = document.getElementById('history-list');
+  const placeholder = list.querySelector('p');
+  if(placeholder) placeholder.remove();
+  const score = task.result?.evaluation?.score;
+  const color = task.status==='completed'?'#34d399':'#f87171';
+  const div = document.createElement('div');
+  div.className='history-item';
+  div.innerHTML=`
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px">
+      <span style="font-size:10px;font-weight:700;color:${color};text-transform:uppercase">${task.status}</span>
+      ${score!=null?`<span style="font-size:11px;font-weight:600;color:#a5b4fc">${score.toFixed(1)}/10</span>`:''}
+    </div>
+    <div style="font-size:12px;color:#d1d5db;line-height:1.4">${escapeHtml(task.description.slice(0,60))}${task.description.length>60?'…':''}</div>
+    ${task.latency_ms?`<div style="font-size:10px;color:#4b5563;margin-top:3px">${(task.latency_ms/1000).toFixed(1)}s · ${task.total_tokens||0} tokens</div>`:''}`;
+  div.onclick=async ()=>{
+    document.querySelectorAll('.history-item').forEach(h=>h.classList.remove('active'));
+    div.classList.add('active');
+    currentTaskId = task.id;
+    if(task.result?.files) renderFiles(task.result.files);
+    if(task.result?.evaluation) renderEvaluation(task.result.evaluation);
+  };
+  list.insertBefore(div, list.firstChild);
+}
 
-      else if (event === 'step_start') {
-        const step = data.data.step;
-        updateStep(step.id, 'in_progress');
-        setPipelineState(step.agent, 'active');
-        addLog(`Starting: ${step.agent} — ${step.description.slice(0,60)}...`, 'info');
-      }
+// ─── Main run ─────────────────────────────────────────────
+async function runTask(){
+  const desc = document.getElementById('task-input').value.trim();
+  if(!desc) return;
 
-      else if (event === 'step_done') {
-        const step = data.data.step;
-        updateStep(step.id, 'completed');
-        setPipelineState(step.agent, 'done');
-        const ms = step.execution_time_ms ? ` (${(step.execution_time_ms/1000).toFixed(1)}s)` : '';
-        addLog(`✓ ${step.agent} completed${ms}`, 'success');
-      }
+  // Reset UI
+  document.getElementById('output-section').style.display='block';
+  document.getElementById('log-container').innerHTML='';
+  document.getElementById('plan-container').innerHTML='<p style="font-size:12px;color:#374151;font-style:italic">Planning...</p>';
+  document.getElementById('eval-container').innerHTML='<p style="font-size:12px;color:#374151;font-style:italic">Waiting...</p>';
+  document.getElementById('code-section').style.display='none';
+  document.getElementById('diff-panel').style.display='none';
+  document.getElementById('react-container').innerHTML='<p style="font-size:12px;color:#374151;font-style:italic;padding:4px">Reasoning steps will appear here...</p>';
+  document.getElementById('file-tabs').innerHTML='';
+  document.getElementById('code-output').innerHTML='';
+  document.getElementById('token-display').textContent='';
+  document.getElementById('log-spinner').style.display='flex';
+  document.getElementById('parallel-badge').style.display='none';
 
-      else if (event === 'step_error') {
-        const step = data.data.step;
-        updateStep(step.id, 'failed');
-        addLog(`✗ ${step.agent} failed: ${data.data.error?.slice(0,80)}`, 'error');
-      }
+  ['pipe-manus','pipe-research','pipe-coding','pipe-debug','pipe-test','pipe-eval'].forEach(id=>{
+    const el=document.getElementById(id);
+    el.className='pipeline-icon';
+    el.style.background='#1a1a2e';
+  });
 
-      else if (event === 'debug_start') {
-        setPipelineState('debug', 'active');
-        addLog(`🐛 Debug loop triggered — Groq fixing error...`, 'warning');
-      }
+  const btn = document.getElementById('run-btn');
+  btn.disabled=true; btn.style.opacity='.6';
+  document.getElementById('btn-text').textContent='Running...';
+  document.getElementById('btn-icon').textContent='⏳';
+  document.getElementById('status-badge').innerHTML='<div class="pulse-dot" style="background:#6366f1"></div><span style="color:#a5b4fc">Running</span>';
 
-      else if (event === 'evaluation_done') {
-        setPipelineState('eval', 'done');
-        const ev = data.data.evaluation;
-        renderEvaluation(ev);
-        addLog(`📊 Evaluation complete — Score: ${ev?.score?.toFixed(1)}/10`, ev?.score >= 7 ? 'success' : 'warning');
-        if (data.data.improved) addLog('✨ Code improved after re-evaluation', 'success');
-      }
+  setPipelineState('manus','active');
+  addLog('Manus initialised — sending task to Groq','agent');
 
-      else if (event === 'improving') {
-        addLog(`🔄 Score below threshold — Manus triggering improvement loop`, 'warning');
-      }
-
-      else if (event === 'task_done') {
-        const task = data.data;
-        addLog('🎉 Task completed successfully!', 'success');
-        if (task.result?.files) renderFiles(task.result.files);
-        // Wire up chat with task context
-        currentTaskId = task.id;
-        setChatStatus('Task complete — ask me about it!', '#10b981');
-        if (!chatOpen) {
-          document.getElementById('chat-unread').style.display = 'inline';
-          document.getElementById('chat-toggle').style.boxShadow = '0 4px 20px rgba(16,185,129,0.5)';
-        }
-        document.getElementById('status-badge').innerHTML = `
-          <div class="pulse-dot bg-emerald-400"></div>
-          <span class="text-emerald-400">Task Complete</span>`;
-        setTimeout(() => {
-          document.getElementById('status-badge').innerHTML = `
-            <div class="pulse-dot bg-emerald-400"></div>
-            <span>System Ready</span>`;
-        }, 5000);
-      }
-
-      else if (event === 'task_failed') {
-        addLog(`💥 Task failed: ${data.data.error}`, 'error');
-        document.getElementById('status-badge').innerHTML = `
-          <div class="pulse-dot bg-red-400"></div>
-          <span class="text-red-400">Task Failed</span>`;
-      }
-    }
-
-    // Enter to submit
-    document.getElementById('task-input').addEventListener('keydown', e => {
-      if (e.key === 'Enter' && e.metaKey) runTask();
+  try {
+    const resp = await fetch('/api/v1/agent/run',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({description:desc, session_id: SESSION_ID}),
     });
-  </script>
+
+    const reader = resp.body.getReader();
+    const decoder = new TextDecoder();
+    let buf='', lastEvent='';
+
+    while(true){
+      const {done,value}=await reader.read();
+      if(done) break;
+      buf += decoder.decode(value,{stream:true});
+      const lines = buf.split('\n');
+      buf = lines.pop();
+      for(const line of lines){
+        if(line.startsWith('event: ')){ lastEvent=line.slice(7).trim(); continue; }
+        if(line.startsWith('data: ')){
+          try{ handleEvent(lastEvent, JSON.parse(line.slice(6))); }catch(_){}
+        }
+      }
+    }
+  } catch(err){
+    addLog('Connection error: '+err.message,'error');
+  } finally {
+    document.getElementById('log-spinner').style.display='none';
+    btn.disabled=false; btn.style.opacity='1';
+    document.getElementById('btn-text').textContent='Run Agent';
+    document.getElementById('btn-icon').textContent='▶';
+  }
+}
+
+// ─── Event router ────────────────────────────────────────
+function handleEvent(event, data){
+  if(event==='rag_context_loaded'){
+    const srcs = (data.data?.sources||[]).map(s=>s.name).join(', ');
+    addLog(`📎 RAG context loaded — ${data.data?.chars||0} chars from: ${srcs}`,'agent');
+  }
+  else if(event==='plan_ready'){
+    setPipelineState('manus','done');
+    const steps=data.data?.steps||[];
+    renderPlan(steps);
+    // Show parallel badge if multiple research steps
+    if(steps.filter(s=>s.agent==='research').length>1)
+      document.getElementById('parallel-badge').style.display='block';
+    addLog(`Manus created a ${steps.length}-step plan`,'agent');
+  }
+  else if(event==='step_start'){
+    const s=data.data?.step;
+    if(s){ updateStep(s.id,'in_progress'); setPipelineState(s.agent,'active'); addLog(`Starting: ${s.agent} — ${s.description.slice(0,60)}...`,'info'); }
+  }
+  else if(event==='step_done'){
+    const s=data.data?.step;
+    if(s){
+      updateStep(s.id,'completed');
+      setPipelineState(s.agent,'done');
+      const ms=s.execution_time_ms?` (${(s.execution_time_ms/1000).toFixed(1)}s)`:'';
+      addLog(`✓ ${s.agent} completed${ms}`,'success');
+    }
+  }
+  else if(event==='step_error'){
+    const s=data.data?.step;
+    if(s){ updateStep(s.id,'failed'); addLog(`✗ ${s.agent} failed: ${(data.data?.error||'').slice(0,80)}`,'error'); }
+  }
+  else if(event==='agent_thought'){
+    renderReactStep(data.data||{});
+  }
+  else if(event==='debug_start'){
+    setPipelineState('debug','active');
+    addLog('🐛 Debug loop triggered — Groq fixing error...','warning');
+    metrics.retries++;
+    updateMetricsBar();
+  }
+  else if(event==='code_diff'){
+    renderDiff(data.data?.diff||'');
+    addLog(`🔧 Auto-healed in ${data.data?.attempts||1} attempt(s)`,'success');
+  }
+  else if(event==='evaluation_done'){
+    setPipelineState('eval','done');
+    const ev=data.data?.evaluation;
+    if(ev){ renderEvaluation(ev); addLog(`📊 Score: ${ev.score?.toFixed(1)}/10`,ev.score>=7?'success':'warning'); }
+    if(data.data?.tokens_used) document.getElementById('token-display').textContent=`${data.data.tokens_used.toLocaleString()} tokens`;
+    if(data.data?.improved) addLog('✨ Code improved after re-evaluation','success');
+    if(ev?.score) metrics.scores.push(ev.score);
+    updateMetricsBar();
+  }
+  else if(event==='improving'){
+    addLog(`🔄 Score ${data.data?.score?.toFixed(1)}/10 — triggering improvement loop`,'warning');
+  }
+  else if(event==='task_done'){
+    const task=data.data||{};
+    metrics.tasks++;
+    metrics.successes++;
+    if(task.latency_ms) metrics.lastLatencyMs=task.latency_ms;
+    if(task.total_tokens) document.getElementById('token-display').textContent=`${task.total_tokens.toLocaleString()} tokens`;
+    updateMetricsBar();
+    if(task.result?.files) renderFiles(task.result.files);
+    currentTaskId=task.id;
+    addToHistory(task);
+    addLog('🎉 Task completed!','success');
+    document.getElementById('status-badge').innerHTML='<div class="pulse-dot" style="background:#34d399"></div><span style="color:#34d399">Complete</span>';
+    document.getElementById('chat-unread').style.display='inline';
+    document.getElementById('chat-toggle').style.boxShadow='0 4px 20px rgba(16,185,129,.5)';
+    document.getElementById('chat-status-text').textContent='Task complete — ask me about it!';
+    document.getElementById('chat-status-text').style.color='#10b981';
+    setTimeout(()=>{
+      document.getElementById('status-badge').innerHTML='<div class="pulse-dot" style="background:#34d399"></div><span>Ready</span>';
+    },5000);
+  }
+  else if(event==='task_failed'){
+    metrics.tasks++;
+    updateMetricsBar();
+    addLog('💥 Task failed: '+(data.data?.error||'').slice(0,100),'error');
+    document.getElementById('status-badge').innerHTML='<div class="pulse-dot" style="background:#f87171"></div><span style="color:#f87171">Failed</span>';
+  }
+}
+
+// ─── Chat ────────────────────────────────────────────────
+function toggleChat(){
+  chatOpen=!chatOpen;
+  document.getElementById('chat-window').style.display=chatOpen?'block':'none';
+  document.getElementById('chat-icon').textContent=chatOpen?'✕':'💬';
+  document.getElementById('chat-label').textContent=chatOpen?'Close':'Chat with Manus';
+  document.getElementById('chat-unread').style.display='none';
+  document.getElementById('chat-toggle').style.boxShadow='0 4px 20px rgba(99,102,241,.4)';
+  if(chatOpen) document.getElementById('chat-input').focus();
+}
+
+function appendChatMsg(content, role){
+  const c=document.getElementById('chat-messages');
+  const isUser=role==='user';
+  const div=document.createElement('div');
+  div.className='slide-in';
+  div.style.cssText=`display:flex;gap:6px;align-items:flex-start;${isUser?'flex-direction:row-reverse':''}`;
+  const avatar=isUser
+    ?`<div style="width:24px;height:24px;border-radius:50%;background:#1e3a5f;display:flex;align-items:center;justify-content:center;font-size:11px;flex-shrink:0">👤</div>`
+    :`<div style="width:24px;height:24px;border-radius:50%;background:linear-gradient(135deg,#6366f1,#8b5cf6);display:flex;align-items:center;justify-content:center;font-size:11px;flex-shrink:0">🤖</div>`;
+  const bubble=`<div style="background:${isUser?'#1e3a5f':'#1a1a2e'};border-radius:${isUser?'8px 0 8px 8px':'0 8px 8px 8px'};padding:8px 12px;font-size:12px;color:#e2e8f0;max-width:250px;line-height:1.5;white-space:pre-wrap">${escapeHtml(content)}</div>`;
+  div.innerHTML=avatar+bubble;
+  c.appendChild(div);
+  c.scrollTop=c.scrollHeight;
+}
+
+async function sendChat(){
+  const input=document.getElementById('chat-input');
+  const msg=input.value.trim();
+  if(!msg) return;
+  input.value='';
+  appendChatMsg(msg,'user');
+  document.getElementById('chat-status-text').textContent='Thinking...';
+  document.getElementById('chat-status-text').style.color='#f59e0b';
+  const btn=document.getElementById('chat-send-btn');
+  btn.disabled=true; btn.textContent='...';
+  try {
+    const r=await fetch('/api/v1/chat/',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({message:msg,session_id:SESSION_ID,task_id:currentTaskId}),
+    });
+    const d=await r.json();
+    appendChatMsg(d.reply,'assistant');
+    document.getElementById('chat-status-text').textContent='Online';
+    document.getElementById('chat-status-text').style.color='#6366f1';
+  } catch(e){
+    appendChatMsg('Sorry, something went wrong.','assistant');
+  } finally {
+    btn.disabled=false; btn.textContent='Send';
+  }
+}
+
+// ─── Attachments ─────────────────────────────────────────
+const attachedSources = [];   // [{name, type, chunks, chars}]
+
+function setAttachStatus(msg, color='#6366f1'){
+  const el = document.getElementById('attach-status');
+  el.textContent = msg;
+  el.style.color = color;
+  if(msg) setTimeout(()=>{ el.textContent=''; }, 4000);
+}
+
+function renderAttachmentTag(src){
+  const list = document.getElementById('attachments-list');
+  list.style.display = 'flex';
+  const tag = document.createElement('div');
+  tag.style.cssText='display:flex;align-items:center;gap:5px;padding:3px 10px;border-radius:999px;background:#1a1a2e;border:1px solid #2d2d44;font-size:11px;color:#d1d5db';
+  const icon = src.type==='url' ? '🌐' : '📄';
+  tag.innerHTML = `${icon} <span style="max-width:140px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${escapeHtml(src.name.slice(0,40))}</span> <span style="color:#4b5563">${src.chunks} chunks</span>
+    <span onclick="removeAttachment('${src.name}')" style="cursor:pointer;color:#6b7280;margin-left:2px" onmouseover="this.style.color='#f87171'" onmouseout="this.style.color='#6b7280'">×</span>`;
+  list.appendChild(tag);
+}
+
+function removeAttachment(name){
+  const idx = attachedSources.findIndex(s=>s.name===name);
+  if(idx!==-1) attachedSources.splice(idx,1);
+  // Re-render tags
+  const list = document.getElementById('attachments-list');
+  list.innerHTML='';
+  if(attachedSources.length===0){ list.style.display='none'; return; }
+  attachedSources.forEach(renderAttachmentTag);
+}
+
+async function handleFileSelect(event){
+  const files = Array.from(event.target.files);
+  if(!files.length) return;
+  setAttachStatus(`Uploading ${files.length} file(s)...`,'#f59e0b');
+  for(const file of files){
+    try {
+      const form = new FormData();
+      form.append('session_id', SESSION_ID);
+      form.append('file', file);
+      const resp = await fetch('/api/v1/upload/file',{method:'POST',body:form});
+      if(!resp.ok){ const e=await resp.json(); throw new Error(e.detail||'Upload failed'); }
+      const data = await resp.json();
+      attachedSources.push(data);
+      renderAttachmentTag(data);
+      setAttachStatus(`✓ ${data.name} — ${data.chunks} chunks ingested`,'#34d399');
+    } catch(e){
+      setAttachStatus(`✗ ${file.name}: ${e.message}`,'#f87171');
+    }
+  }
+  event.target.value='';
+}
+
+async function addURL(){
+  const input = document.getElementById('url-input');
+  const url = input.value.trim();
+  if(!url) return;
+  setAttachStatus('Fetching URL...','#f59e0b');
+  input.value='';
+  try {
+    const resp = await fetch('/api/v1/upload/url',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({url, session_id: SESSION_ID}),
+    });
+    if(!resp.ok){ const e=await resp.json(); throw new Error(e.detail||'Fetch failed'); }
+    const data = await resp.json();
+    attachedSources.push(data);
+    renderAttachmentTag(data);
+    setAttachStatus(`✓ ${data.name.slice(0,40)} — ${data.chunks} chunks ingested`,'#34d399');
+  } catch(e){
+    setAttachStatus(`✗ ${e.message}`,'#f87171');
+  }
+}
+
+// ─── Keyboard shortcut
+document.addEventListener('DOMContentLoaded',()=>{
+  document.getElementById('task-input').addEventListener('keydown',e=>{
+    if(e.key==='Enter'&&e.metaKey) runTask();
+  });
+  updateMetricsBar();
+});
+</script>
 </body>
 </html>
